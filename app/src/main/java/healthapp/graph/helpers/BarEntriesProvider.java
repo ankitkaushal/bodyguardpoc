@@ -15,4 +15,5 @@ import healthapp.dbhelpers.EntryTypeDao;
 
 public interface BarEntriesProvider extends IAxisValueFormatter {
     List<BarEntry> getBarEntries(EntryDao entryDao, EntryTypeDao entryTypeDao) ;
+    String getInformation();
 }

@@ -34,28 +34,22 @@ public class WeeklyBar implements BarEntriesProvider {
     int weeklyScore = 0;
 
 
-    public int getWeeklyScore() {
-        return weeklyScore;
-    }
+
+
 
     @Override
     public String getFormattedValue(float value, AxisBase axis) {
-        Calendar c = Calendar.getInstance();
-        c.setTime(new Date());
-        int dayOfWeek = c.get(Calendar.DAY_OF_WEEK)-1;
 
-        int valueOfX = dayOfWeek-(int)(7-value);
-        if(valueOfX<0){
-            valueOfX+=7;
-        }
 
-        return  days[valueOfX];
+        return  days[(int)value-1];
 
 
     }
 
     @Override
     public List<BarEntry> getBarEntries(final EntryDao entryDao ,final EntryTypeDao entryTypeDao)  {
+               weeklyScore = 0;
+
                 List<BarEntry> barEntries = new ArrayList<>();
 
                 List<EntryType> types = entryTypeDao.getAll();
@@ -65,25 +59,38 @@ public class WeeklyBar implements BarEntriesProvider {
                 Map<Integer,Integer> scoreMap = new HashMap<>();
                 List<Entry> entries = entryDao.getAll();
                 for(Entry entry:entries){
-                    int differenceInDays = getDateDiff(entry.getDate(), DateUtil.tommorowFirstInstant());
-                    EntryType entryType = typeMap.get(entry.getType());
-                    int score = entryType.getScore();
+                    Date today = new Date();
 
-                    int dayEntry = scoreMap.get(differenceInDays)==null? 0: scoreMap.get(differenceInDays);
-                    scoreMap.put(differenceInDays,dayEntry+score);
-                    System.out.println(scoreMap);
+                   int dayOfWeek = getDayOfWeek(today);
+                   int weekOfYear = getWeekOfYear(today);
+                   int entryWeekOfYear = getWeekOfYear(entry.getDate());
+
+                    EntryType entryType = typeMap.get(entry.getType());
+
+                   if(weekOfYear == entryWeekOfYear && entry.getDate().getYear() == today.getYear()){
+                       int score = entryType.getScore();
+                       int dayEntry = scoreMap.get(dayOfWeek)==null? 0: scoreMap.get(dayOfWeek);
+                       scoreMap.put(dayOfWeek,dayEntry+score);
+                   }
+
+
                 }
 
 
-            for(int i=0;i<7;i++){
+            for(int i=1;i<8;i++){
                 Integer score = scoreMap.get(i)==null?0:scoreMap.get(i);
                 weeklyScore+=score;
-                barEntries.add(new BarEntry(7-i,score));
+                barEntries.add(new BarEntry(i,score));
             }
 
             return barEntries;
 
 
+    }
+
+    @Override
+    public String getInformation() {
+        return "Weekly score: " + weeklyScore;
     }
 
     private Map<String,EntryType> makeEntryTypeMap(List<EntryType> types) {
@@ -95,8 +102,19 @@ public class WeeklyBar implements BarEntriesProvider {
         return typeMap;
     }
 
-    public static int getDateDiff(Date date1, Date date2) {
-        Days days = Days.daysBetween(new DateTime(date1.getTime()),new DateTime(date2.getTime()));
-        return  days.getDays();
+
+
+    private int getDayOfWeek(Date date){
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+        return dayOfWeek;
+    }
+
+    private int getWeekOfYear(Date date){
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        int weekOfYear = c.get(Calendar.WEEK_OF_YEAR);
+        return weekOfYear;
     }
 }
