@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.GridLayout
+    android:id="@+id/grid_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:grid="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerHorizontal="true"
+    android:background="#5faa1a"
+    grid:alignmentMode="alignBounds"
+    grid:columnCount="2">
+
+
+    <!--Button
+        android:background="#5faa1a"
+        android:drawableTop="@drawable/fruit"
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Fruit" />
+
+
+    <Button
+        android:background="#5faa1a"
+        android:drawableTop="@drawable/greentea"
+        android:id="@+id/greentea"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Green Tea" />
+
+    <Button
+        android:background="#5faa1a"
+        android:drawableTop="@drawable/greentea"
+        android:id="@+id/sugar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Sugar" /-->
+
+
+
+</android.support.v7.widget.GridLayout>
