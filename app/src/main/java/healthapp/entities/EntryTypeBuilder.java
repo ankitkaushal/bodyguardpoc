@@ -5,6 +5,7 @@ public final class EntryTypeBuilder {
     private int score;
     private boolean active;
     private String image;
+    private EntryTypeCategory category;
 
     private EntryTypeBuilder() {
     }

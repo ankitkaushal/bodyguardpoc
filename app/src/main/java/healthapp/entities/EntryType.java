@@ -22,6 +22,8 @@ public class EntryType {
     @ColumnInfo(name = "image")
     private String image;
 
+    private EntryTypeCategory category;
+
     public String getName() {
         return name;
     }

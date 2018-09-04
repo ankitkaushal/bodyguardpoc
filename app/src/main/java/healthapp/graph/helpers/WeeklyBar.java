@@ -61,7 +61,7 @@ public class WeeklyBar implements BarEntriesProvider {
                 for(Entry entry:entries){
                     Date today = new Date();
 
-                   int dayOfWeek = getDayOfWeek(today);
+                   int entryDayOfWeek = getDayOfWeek(entry.getDate());
                    int weekOfYear = getWeekOfYear(today);
                    int entryWeekOfYear = getWeekOfYear(entry.getDate());
 
@@ -69,8 +69,8 @@ public class WeeklyBar implements BarEntriesProvider {
 
                    if(weekOfYear == entryWeekOfYear && entry.getDate().getYear() == today.getYear()){
                        int score = entryType.getScore();
-                       int dayEntry = scoreMap.get(dayOfWeek)==null? 0: scoreMap.get(dayOfWeek);
-                       scoreMap.put(dayOfWeek,dayEntry+score);
+                       int dayEntry = scoreMap.get(entryDayOfWeek)==null? 0: scoreMap.get(entryDayOfWeek);
+                       scoreMap.put(entryDayOfWeek,dayEntry+score);
                    }
 
 
